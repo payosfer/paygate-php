@@ -14,62 +14,33 @@ katma değerli servislerimiz ile ödeme giderlerinizi azaltın, cironuzu artır�
 </p>
 
 ## PAYGATE
-[![Craftgate Dotnet CI](https://img.shields.io/badge/Craftgate%20Dotnet%20CI-passing-brightgreen)]()
+[![Paygate Dotnet CI](https://img.shields.io/badge/Paygate%20Dotnet%20CI-passing-brightgreen)]()
 [![nuget](https://img.shields.io/badge/nuget-v1.0.61-blue)]()
-[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)]()
 
 
-## Requirements
-- .NET Framework 4.6+
-- .NET Core 1.1+
-- .NET Core 2.0+
+## Gereksinimler
+- .NET Standart 2.0
+- .NET Core 8 (Tests ve Web projeleri için)
 
-## Installation
+## Kurulum
 `Install-Package  ...... `
 
 
 
-## Usage
-PayGate API'sine erişmek için öncelikle API kimlik bilgilerini (örneğin bir API anahtarı ve gizli anahtar) edinmeniz gerekir. Zaten bir Craftgate hesabınız yoksa https://paygate.io/ adresinden kaydolabilirsiniz.
+## Kullanım
+PayGate API'sine erişmek için öncelikle API kimlik bilgilerini (örneğin bir API anahtarı ve gizli anahtar) edinmeniz gerekir. 
 
 API kimlik bilgilerinizi aldıktan sonra, PayGate kimlik bilgilerinizle bir örnek oluşturarak PayGate'i kullanmaya başlayabilirsiniz.
 
+## Örnekler
 
-`$craftgate = new \PayGate\PayGate(array(
-    'apiKey' => '<YOUR API KEY>',
-    'secretKey' => '<YOUR SECRET KEY>',
-));`
-
-
-Varsayılan olarak PayGate istemcisi üretim API sunucularına bağlanır https://api.paygate.io. Test amaçlı olarak lütfen https://sandbox-api.paygate.io. kullanarak deneme alanı URL'sini kullanın.
-
-
-`$paygate = new \PayGate\PayGate(array(
-    'apiKey' => '<YOUR API KEY>',
-    'secretKey' => '<YOUR SECRET KEY>',
-    'baseUrl' => 'https://sandbox-api.paygate.io',
-));`
-
-
-## Examples
-
-
-### Running the Examples
-
-
-### Credit Card Payment Use Case
+### Kredi Kartı Ödeme Kullanım Örneği
 
 ```php
-$craftgate = new \Craftgate\Craftgate(array(
-    'apiKey' => '<YOUR API KEY>',
-    'secretKey' => '<YOUR SECRET KEY>',
-    'baseUrl' => 'https://sandbox-api.craftgate.io',
-));
-
 $request = array(
-    'price' => 100,
-    'paidPrice' => 100,
-    'walletPrice' => 0,
+    'amount' => 100,
+    'paidamount' => 100,
+    'walletamount' => 0,
     'installment' => 1,
     'currency' => \Craftgate\Model\Currency::TL,
     'paymentGroup' => \Craftgate\Model\PaymentGroup::LISTING_OR_SUBSCRIPTION,
@@ -81,35 +52,18 @@ $request = array(
         'expireMonth' => '07',
         'cvc' => '000'
     ),
-    'items' => array(
-        array(
-            'externalId' => \Craftgate\Util\Guid::generate(),
-            'name' => 'Item 1',
-            'price' => 30
-        ),
-        array(
-            'externalId' => \Craftgate\Util\Guid::generate(),
-            'name' => 'Item 2',
-            'price' => 50
-        ),
-        array(
-            'externalId' => \Craftgate\Util\Guid::generate(),
-            'name' => 'Item 3',
-            'price' => 20
-        )
-    )
 );
 
-$response = $craftgate->payment()->createPayment($request);
+$response = $createPaymentAsync($request);
 
 var_dump($response);
 ```
 
 
 
-### Contributions
+### Katkılar
 For all contributions to this client please see the contribution guide here.
 
-## License
+## Lisans
 
 *MIT*
