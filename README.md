@@ -37,28 +37,26 @@ API kimlik bilgilerinizi aldıktan sonra, PayGate kimlik bilgilerinizle bir örn
 ### Kredi Kartı Ödeme Kullanım Örneği
 
 ```php
-$request = array(
-    'amount' => 100,
-    'paidamount' => 100,
-    'walletamount' => 0,
-    'installment' => 1,
-    'currency' => \Craftgate\Model\Currency::TL,
-    'paymentGroup' => \Craftgate\Model\PaymentGroup::LISTING_OR_SUBSCRIPTION,
-    'conversationId' => '456d1297-908e-4bd6-a13b-4be31a6e47d5',
-    'card' => array(
-        'cardHolderName' => 'Haluk Demir',
-        'cardNumber' => '5258640000000001',
-        'expireYear' => '2044',
-        'expireMonth' => '07',
-        'cvc' => '000'
-    ),
-);
+$payment = new PaymentService();
+$request = new CreatePaymentInput();
+$request->Amount = 100.0;
+$request->PaidAmount = 100.0;
+$request->WalletAmount = 0.0;
+$request->Installment = 1;
+$request->ConversationId = "456d1297-908e-4bd6-a13b-4be31a6e47d5";
+$request->Currency = Currency::TRY;
+$request->PaymentGroup = PaymentGroup::LISTING_OR_SUBSCRIPTION;
 
-$response = $createPaymentAsync($request);
+$request->Card = new CardDto();
+$request->Card->CardHolderName = "Haluk Demir";
+$request->Card->CardNumber = "5258640000000001";
+$request->Card->ExpireYear = "2044";
+$request->Card->ExpireMonth = "07";
+$request->Card->Cvc = "000";
 
-var_dump($response);
+$response = $payment->createPaymentAsync($request);
+assert($response !== null, "Response should not be null");
 ```
-
 
 
 ### Katkılar
